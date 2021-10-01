@@ -1,6 +1,7 @@
 //Program intended on finding the tax and tip values of a given meal 
 #include <time.h>
 #include <stdio.h>
+#include <math.h>
 
 int main () 
 {
@@ -21,8 +22,9 @@ int main ()
     tax *= food[i] * .01;
     tip *= food[i] * .01;
     total = food[i] + tax + tip;
-    printf("Cost of meal: %f\n", food[i]);
-    printf("Your tax: %f\n", tax);
-    printf("Your tip: %f\n", tip);
-    printf("Your total: %f\n", total);
+    printf("Cost of meal: $%.2f\n", round(food[i] * 100)/100);
+    printf("Your tax: $%.2f\n", round(tax * 100)/100);
+    printf("Your tip: $%.2f\n", round(tip * 100)/100);
+    printf("Your total: $%.2f\n", round(total * 100)/100);
+    return 0;
 }

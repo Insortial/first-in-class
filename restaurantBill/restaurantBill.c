@@ -1,6 +1,7 @@
-//Program intended on finding the tax and tip values of a given meal 
+//Program intended on finding the tax and tip values of a given meal after the user types it into the command line
 #include <time.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
 
 int main () 

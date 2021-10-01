@@ -1,5 +1,13 @@
+/*
+    This program uses a while loop to bring up a menu that presents the player with options. The player inputs a number
+    which brings them to the three different cases. For the first case it places them in an endless loop which can be 
+    exited via guessing the correct number or typing q.  The second case places users in an endless loop that can only
+    be exited if you put in a valid max number for the program to randomly pull from. The final case exits users from 
+    the program.
+*/
 #include <time.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 
 int mainGame(int *userInput)
@@ -18,15 +26,15 @@ int main()
     bool endgame = false; 
     time_t t;
     srand((unsigned) time(&t));
-
-    while(!endgame)
+    
+    //Creates an endless loop that can only be broken out of via inputting 3 into the menu 
+    while(true)
     {
         mainGame(&input);
         randomNumber = rand() % MaxNumber;
-        //printf("%d", input);
         if(input == 1)
         {
-            while(!endgame)
+            while(true)
             {
                 printf("Enter a number: ");
                 scanf("%d", &input);
@@ -52,8 +60,7 @@ int main()
             }
         } else if(input == 2)
         {
-            bool validValue = false;
-            while(!validValue)
+            while(true)
             {
                 printf("Enter a new Max Value: ");
                 scanf("%d", &MaxNumber);
@@ -62,7 +69,6 @@ int main()
                     printf("Invalid Value\n");
                 } else
                 {
-                    validValue = true;
                     break;
                 }
             }

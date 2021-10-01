@@ -12,8 +12,10 @@
 
 int mainGame(int *userInput)
 {
+    //Brings up the menu 
     printf("Press 1 to play a game\nPress 2 to change the max number\nPress 3 to quit\nEnter Here: ");
     scanf("%d", userInput);
+    getchar();
     return 0;
 }
 
@@ -31,9 +33,11 @@ int main()
     while(true)
     {
         mainGame(&input);
-        randomNumber = rand() % MaxNumber;
+        MaxNumber -= 1;
+        randomNumber = (rand() % MaxNumber) + 1;
         if(input == 1)
         {
+            //Creates an endless loop that will only be broken out of if you have won the game
             while(true)
             {
                 printf("Enter a number: ");
@@ -60,6 +64,7 @@ int main()
             }
         } else if(input == 2)
         {
+            //Creates an endless loop that can only be broken out of if the user has entered a valid max value
             while(true)
             {
                 printf("Enter a new Max Value: ");
@@ -76,6 +81,9 @@ int main()
         {
             printf("Leaving");
             break;
+        } else 
+        {
+            printf("Invalid value\n");
         }
     }
     return 0;

@@ -1,32 +1,61 @@
+/*
+    This program uses a while loop to bring up a menu that presents the player with options. The player inputs a number
+    which brings them to the three different cases. For the first case it places them in an endless loop which can be 
+    exited via guessing the correct number or typing q.  The second case places users in an endless loop that can only
+    be exited if you put in a valid max number for the program to randomly pull from. The final case exits users from 
+    the program.
+*/
 #include <time.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 
 int mainGame(int *userInput)
 {
-    printf("Press 1 to play a game\nPress 2 to change the max number\nPress 3 to quit\nEnter Here: ");
+    //Brings up the menu 
+    printf("\nPress 1 to play a game\nPress 2 to change the max number\nPress 3 to quit\nEnter Here: ");
     scanf("%d", userInput);
+    getchar();
     return 0;
 }
 
 int main()
 {
+    FILE *fp;
     int input;
+    int fileNumber;
     int randomNumber;
     int MaxNumber = 10;
+    //Opens a text file and checks if there is any text in it and stores it into the int size
+    fp = fopen("maxValue.txt", "a+");
+    fseek(fp, 0L, SEEK_END);
+    int size = ftell(fp);
+    rewind(fp);
+    //Checks if there is text in the file, if there is updates the MaxNumber with the number in the file
+    if(size != 0)
+    {
+        fscanf(fp, "%d", &fileNumber);
+        if(input < 10 || input > 1)
+        {
+            MaxNumber = fileNumber;
+        }
+    }
+    fclose(fp);
     char check;
-    bool endgame = false; 
     time_t t;
     srand((unsigned) time(&t));
 
-    while(!endgame)
+    //Creates an endless loop that can only be broken out of via inputting 3 into the menu 
+    while(true)
     {
         mainGame(&input);
-        randomNumber = rand() % MaxNumber;
-        //printf("%d", input);
+        MaxNumber -= 1;
+        randomNumber = (rand() % MaxNumber) + 1;
+        //Checks for the different cases 
         if(input == 1)
         {
-            while(!endgame)
+            //Creates an endless loop that will only be broken out of if you have won the game
+            while(true)
             {
                 printf("Enter a number: ");
                 scanf("%d", &input);
@@ -52,8 +81,8 @@ int main()
             }
         } else if(input == 2)
         {
-            bool validValue = false;
-            while(!validValue)
+            //Creates an endless loop that can only be broken out of if the user has entered a valid max value
+            while(true)
             {
                 printf("Enter a new Max Value: ");
                 scanf("%d", &MaxNumber);
@@ -62,7 +91,9 @@ int main()
                     printf("Invalid Value\n");
                 } else
                 {
-                    validValue = true;
+                    fp = fopen("maxValue.txt", "w+");
+                    fprintf(fp, "%d", MaxNumber);
+                    fclose(fp);
                     break;
                 }
             }
@@ -70,6 +101,9 @@ int main()
         {
             printf("Leaving");
             break;
+        } else 
+        {
+            printf("Invalid value\n");
         }
     }
     return 0;
